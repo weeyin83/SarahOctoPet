@@ -16,23 +16,13 @@ jobs:
     - uses: OctopusDeploy/install-octocli@v1
       with:
         version: 7.4.2
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.2.207
-    - name: Install dependencies
-      run: dotnet restore
+    - name: Restore
+      run: dotnet restore **/*.csproj
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet **/*.csproj --configuration ${{ env.BuildConfiguration }}
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
-    - name: Create artifacts folder
-      run: |
-        mkdir "$GITHUB_WORKSPACE/artifacts"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Database"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Web"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.ProductService"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.ShoppingCartService"
+      run: dotnet test **/*[Tt]ests/*.csproj --configuration ${{ env.BuildConfiguration }}
+    - name: Publish Web
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.Web/OctopusSamples.OctoPetShop.Web.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.Web\
     - name: Publish Product Service API
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.ProductService/OctopusSamples.OctoPetShop.ProductService.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.ProductService\
