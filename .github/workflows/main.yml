@@ -22,13 +22,6 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-    - name: Create artifacts folder
-      run: |
-        mkdir "$GITHUB_WORKSPACE/artifacts"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Database"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Web"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.ProductService"
-        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.ShoppingCartService"
     - name: Publish Web
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.Web/OctopusSamples.OctoPetShop.Web.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.Web\
     - name: Publish Product Service API
@@ -46,13 +39,13 @@ jobs:
     - name: Package OctopusSamples.Octopetshop.ShoppingCartService
       run: octo pack --id=OctopusSamples.OctoPetShop.ShoppingCartService --format=Zip --version=${{ github.run_number }} --basePath=${{ github.workspace }}\output\OctoPetShop.ShoppingCartService\ --outFolder=${{ github.workspace }}\output
     - name: Push OctoPetShop Database
-      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.Database\OctoPetShop.Database.$PACKAGE_VERSION.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
+      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.Database\*.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop Web
-      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.Web\OctoPetShop.Web.$PACKAGE_VERSION.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
+      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.Web\*.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop ProductService
-      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.ProductService\OctoPetShop.ProductService.$PACKAGE_VERSION.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
+      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.ProductService\*.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop ShoppingCartService
-      run: octo push --package=${{ github.workspace }}\output\OctoPetShop.ShoppingCartService\OctoPetShop.ShoppingCartService.$PACKAGE_VERSION.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
+      run: octo push --package=${{ github.workspace }}\output\OctoPetShop.ShoppingCartService\*.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
 
 
                     
