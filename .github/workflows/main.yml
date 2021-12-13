@@ -45,7 +45,7 @@ jobs:
     - name: Push OctoPetShop ProductService
       run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.ProductService.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop ShoppingCartService
-      run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.ShoppingCartService.${{ github.run_number }}N.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
+      run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.ShoppingCartService.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
 
 
                     
