@@ -16,12 +16,19 @@ jobs:
     - uses: OctopusDeploy/install-octocli@v1
       with:
         version: 7.4.2
-    - name: Restore
-      run: dotnet restore **/*.csproj
+    - name: Install dependencies
+      run: dotnet restore
     - name: Build
-      run: dotnet **/*.csproj --configuration ${{ env.BuildConfiguration }}
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test **/*[Tt]ests/*.csproj --configuration ${{ env.BuildConfiguration }}
+      run: dotnet test --no-restore --verbosity normal
+    - name: Create artifacts folder
+      run: |
+        mkdir "$GITHUB_WORKSPACE/artifacts"
+        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Database"
+        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.Web"
+        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.ProductService"
+        mkdir "$GITHUB_WORKSPACE/artifacts/OctopusSamples.OctoPetShop.ShoppingCartService"
     - name: Publish Web
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.Web/OctopusSamples.OctoPetShop.Web.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.Web\
     - name: Publish Product Service API
