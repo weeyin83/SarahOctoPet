@@ -10,7 +10,7 @@ env:
   buildConfiguration: Release
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
     - uses: OctopusDeploy/install-octocli@v1
@@ -39,7 +39,7 @@ jobs:
     - name: Package OctopusSamples.Octopetshop.ShoppingCartService
       run: octo pack --id=OctopusSamples.OctoPetShop.ShoppingCartService --format=Zip --version=${{ github.run_number }} --basePath=${{ github.workspace }}\output\OctoPetShop.ShoppingCartService\ --outFolder=${{ github.workspace }}\output
     - name: Push OctoPetShop Database
-      run: octo push --package="${{ github.workspace }}\output\OctoPetShop.Database\OctopusSamples.OctoPetShop.Database.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
+      run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.Database.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop Web
       run: octo push --package="${{ github.workspace }}\output\OctoPetShop.Web\OctopusSamples.OctoPetShop.Web.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop ProductService
