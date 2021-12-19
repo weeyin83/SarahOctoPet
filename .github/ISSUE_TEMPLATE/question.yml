@@ -17,16 +17,9 @@ body:
       placeholder: ex. email@example.com
     validations:
       required: false
-  - type: input
+  - type: textarea
     id: Question
     attributes:
-      label: Session Title
-      description: What is your question?
-    validations:
-      required: true
-  - type: textarea
-    id: SessionDetails
-    attributes:
-      label: Session Details
-      description: What is your session about?
+      label: Question
+      description: What is your question?  Please provide as much detail as possible. 
       render: shell
