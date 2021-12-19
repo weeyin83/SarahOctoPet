@@ -9,7 +9,7 @@ env:
   buildPlatform: Any CPU
   buildConfiguration: Release
 jobs:
-  build:
+  OctoPetShopBuild:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
