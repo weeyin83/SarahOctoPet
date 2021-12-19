@@ -3,7 +3,7 @@
 on:
   push:
     branches:
-    - master
+    - main
 env:
   solution: '**/*.sln'
   buildPlatform: Any CPU
