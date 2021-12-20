@@ -1,6 +1,6 @@
 param planName string
 param planLocation string = resourceGroup().location
-param planSku string ='F1'
+param planSku string
 
 resource asp 'Microsoft.Web/serverfarms@2020-12-01' = {
   name:planName
@@ -11,7 +11,7 @@ resource asp 'Microsoft.Web/serverfarms@2020-12-01' = {
   sku: {
     name: planSku
   }
-  kind: 'Linux'
+  kind: 'Windows'
 }
 
 output planId string = asp.id
