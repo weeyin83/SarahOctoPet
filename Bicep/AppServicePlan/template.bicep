@@ -11,7 +11,7 @@ resource asp 'Microsoft.Web/serverfarms@2020-12-01' = {
   sku: {
     name: planSku
   }
-  kind: 'Windows'
+  kind: 'Linux'
 }
 
 output planId string = asp.id
