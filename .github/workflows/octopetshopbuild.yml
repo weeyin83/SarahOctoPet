@@ -14,10 +14,11 @@ jobs:
   OctoPetShopBuild:
     runs-on: windows-latest
     steps:
+    # We take a copy of the files within the repo and put them in our working directory
     - uses: actions/checkout@v2
-    - uses: OctopusDeploy/install-octocli@v1
-      with:
-        version: 7.4.2
+    # We install the latest Octopus Deploy CLI
+    - uses: OctopusDeploy/install-octopus-cli-action@v1.1.8
+    # We install the DotNet dependencies we need to help build the application
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -32,6 +33,7 @@ jobs:
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.Database\OctopusSamples.OctoPetShop.Database.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.Database\ --runtime win-x64
     - name: Publish Shopping Cart Service
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.ShoppingCartService\OctopusSamples.OctoPetShop.ShoppingCartService.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.ShoppingCartService\
+    # We now pack the files created into zip files
     - name: Package OctopusSamples.OctoPetShop.Database
       run: octo pack --id=OctopusSamples.OctoPetShop.Database --format=Zip --version=${{ github.run_number }} --basePath=${{ github.workspace }}\output\OctoPetShop.Database\ --outFolder=${{ github.workspace }}\output
     - name: Package OctopusSamples.OctoPetShop.Web
@@ -40,6 +42,7 @@ jobs:
       run: octo pack --id=OctopusSamples.OctoPetShop.ProductService --format=Zip --version=${{ github.run_number }} --basePath=${{ github.workspace }}\output\OctoPetShop.ProductService\ --outFolder=${{ github.workspace }}\output
     - name: Package OctopusSamples.Octopetshop.ShoppingCartService
       run: octo pack --id=OctopusSamples.OctoPetShop.ShoppingCartService --format=Zip --version=${{ github.run_number }} --basePath=${{ github.workspace }}\output\OctoPetShop.ShoppingCartService\ --outFolder=${{ github.workspace }}\output
+    # We then take the files and push them to the Octopus Deploy server
     - name: Push OctoPetShop Database
       run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.Database.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
     - name: Push OctoPetShop Web
