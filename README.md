@@ -7,7 +7,7 @@ Octopus Pet Shop Example Web app written in .NET Core.  This solution consists o
 
 This is a customised fork from the [Octopus Deploy Sample](https://github.com/OctopusSamples/OctoPetShop). 
 
-[![OctoPetShopAppBuild](https://github.com/weeyin83/SarahOctoPet/actions/workflows/octopetshopbuild.yml/badge.svg?branch=main)](https://github.com/weeyin83/SarahOctoPet/actions/workflows/octopetshopbuild.yml)
+[![OctoPetShopAppBuild](https://github.com/weeyin83/SarahOctoPet/actions/workflows/octopetshopbuild.yml/badge.svg?event=push)](https://github.com/weeyin83/SarahOctoPet/actions/workflows/octopetshopbuild.yml)
 [![OctoPetShopBicepBuild](https://github.com/weeyin83/SarahOctoPet/actions/workflows/biceppush.yml/badge.svg?branch=main)](https://github.com/weeyin83/SarahOctoPet/actions/workflows/biceppush.yml)
 
 # GitHub Actions Workflow
