@@ -1,5 +1,7 @@
 #Note: GitHub Actions does not have a 'demands' command on 'runs-on' yet
 #Note: requires secrets OCTOPUSSERVERURL and OCTOPUSSERVERAPIKEY to be configured.
+name: OctoPetShopAppBuild
+
 on:
   push:
     branches:

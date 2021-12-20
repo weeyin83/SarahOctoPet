@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: OctoBicepBuild
+name: OctoPetShopBicepBuild
 
 on:
   push:
@@ -15,8 +15,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: windows-latest
     steps:
+    - uses: actions/checkout@v2
     - uses: OctopusDeploy/install-octopus-cli-action@v1.1.8
     - name: Zip Bicep files
-      run: octo pack --id="OctoBicepInfrastructure" --format="zip" --version=${{ github.run_number }} --basePath=${{ github.workspace }}\Bicep\ --outFolder=${{ github.workspace }}\output
+      run: octo pack --id="OctoBicepFiles" --format="zip" --version=${{ github.run_number }} --basePath=${{ github.workspace }}\Bicep\ --outFolder=${{ github.workspace }}\output
     - name: Push OctoPetShop ProductService
       run: octo push --package="${{ github.workspace }}\output\Bicep.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
