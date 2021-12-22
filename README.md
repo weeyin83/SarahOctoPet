@@ -17,7 +17,7 @@ The 'biceppush.yml' GitHub Actions Workflow file takes the Azure Bicep module an
 
 # Bicep Deployment Process
 
-To deploy Bicep template files from Octopus Deploy to Azure we need to package them inside a ZIP file. Once in a ZIP file we can upload them into the Octopus Library and call them during the deployment process.
+To deploy Bicep template files from Octopus Deploy to Azure we need to package them inside a ZIP file. Once in a ZIP file we can upload them into the Octopus Library.  We deploy our Bicep files using a Octopus Runbook. 
 
 ## Create Azure Resource Group
 As with any deployment of resources to Azure we need to start with the creation of an Azure resource group.
@@ -61,18 +61,31 @@ Our runbook, creates the Resource Group, deploys the Bicep files and then associ
 
 # Variables 
 **Location** - This is the Azure region your resources will be deployed to.
+
 **Resource Group** - This is the name of the Azure Resource Group you will deploy your infrastructure to.
+
 **Plan Name** - This is the name of your Azure App Service Plan.
+
 **Plan Sku** - This is the SKU for your Azure App Service Plan.  This should be S1, B1, P1v2 or something similar. 
+
 **Sku** - This is the SKU for your Azure App Service Plan.  This should be Standard, Premium or equivalent. 
+
 **Product Web Site Name **- This is the name of the Azure Web App that will be used for the deployment of your Product Web Site.
+
 **Shopping Web Site Name** - This is the name of the Azure Web App that will be used for the deployment of your Shopping Cart Web Site.
+
 **Front Web Site Name** - This is the name of the Azure Web App that will be used for the deployment of your Front end Web Site.
+
 **Start FW IP Address** - This is the starting range of the IP address that will be for the SQL Server Firewall Rule.
+
 **End FW IP Address** - This is the end range of the IP address that will be for the SQL Server Firewall Rule.
+
 **Database Name** - This is the name of the database that will be created inside your SQL Server.
+
 **SQL Server Name** - This is the name of your SQL Server.
+
 **SQL Administrator Login** - This is the username for your SQL Server.
+
 **SQL Administrator Login Password** - This is the password for your SQL Server.
 
  # Issue Templates
