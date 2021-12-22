@@ -1,4 +1,3 @@
-param buildNumber string
 param location string = resourceGroup().location
 
 @minLength(3)
@@ -16,20 +15,22 @@ param sqlAdministratorLogin string
 param sqlAdministratorLoginPassword string
 param startFWIpAddress string
 param endFWIpAddress string
+param sku string
 
 // App service plan
 module aspModule 'AppServicePlan/template.bicep' = {
-  name:'appServicePlan-${buildNumber}'
+  name:'appServicePlan'
   params:{
     planName:planName
     planLocation:location
     planSku:planSku
+    sku:sku
   }
 }
 
 // App service deployment
 module productserviceweb 'WebApp/template.bicep' = {
-  name:'productservicewebapp-${buildNumber}'
+  name:'productservicewebapp'
   params:{
     webSiteName:productwebSiteName
     location:location
@@ -42,7 +43,7 @@ module productserviceweb 'WebApp/template.bicep' = {
 
 // App service deployment
 module frontwebapp 'WebApp/template.bicep' = {
-  name:'frontwebapp-${buildNumber}'
+  name:'frontwebapp'
   params:{
     webSiteName:frontwebSiteName
     location:location
@@ -55,7 +56,7 @@ module frontwebapp 'WebApp/template.bicep' = {
 
 // App service deployment
 module shoppingcartweb 'WebApp/template.bicep' = {
-  name:'shoppingcartwebapp-${buildNumber}'
+  name:'shoppingcartwebapp'
   params:{
     webSiteName:shoppingwebSiteName
     location:location
@@ -68,7 +69,7 @@ module shoppingcartweb 'WebApp/template.bicep' = {
 
 // SQL Server and database deployment
 module database 'SQLServer/template.bicep' = {
-  name:'sqlserver-${buildNumber}'
+  name:'sqlserver'
   params:{
     startFWIpAddress:startFWIpAddress
     endFWIpAddress:endFWIpAddress    
