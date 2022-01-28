@@ -1,3 +1,21 @@
+# This repository
+
+This repository contains the code for the [OctoPetShop](#octopetshop) application.  That can be used to demo deployments within Octopus Deploy. 
+
+This repository also contains the Azure Bicep template files that can be used to deploy the infrastructure that is needed to host the OctoPetShop application. 
+
+You can find information explaining more about the repository, bicep templates, deployment process etc within this readme.   If you have any questions or issues please do use the [Issues template](#issue-templates). 
+
+You can view this all being used and in action in this [demo Octopus Deploy instance](https://webinar.octopus.app/app#/Spaces-242). 
+
+**Table of Contents:** 
+- [OctoPetShop](#octopetshop)
+- [GitHub Actions Workflow](#github-actions-workflow)
+- [Bicep Deployment Process](#bicep-deployment-process)
+    - [Create the Azure Resource Group](#create-azure-resource-group)
+    - [Deploy Bicep Template](#deploy-bicep-instructions)
+- [Variables](#variables)
+
 # OctoPetShop
 Octopus Pet Shop Example Web app written in .NET Core.  This solution consists of:
  - Octopus Pet Shop Web front end
@@ -57,7 +75,7 @@ Within our Octopus Runbook we use the "Run an Azure Script" step for this part. 
 
 ![Our Bicep Runbook](/images/biceprunbook.png)
 
-Our runbook, creates the Resource Group, deploys the Bicep files and then associates the new Web Apps with Octopus ready for our application to deploy to them. 
+Our runbook, creates the Resource Group, deploys the Bicep files and then registers the new [Web Apps as deployment targets](https://octopus.com/docs/octopus-rest-api/examples/deployment-targets/add-azure-web-app) within Octopus Deploy ready for our application to deploy to them. 
 
 # Variables 
 **Location** - This is the Azure region your resources will be deployed to.
@@ -70,7 +88,7 @@ Our runbook, creates the Resource Group, deploys the Bicep files and then associ
 
 **Sku** - This is the SKU for your Azure App Service Plan.  This should be Standard, Premium or equivalent. 
 
-**Product Web Site Name **- This is the name of the Azure Web App that will be used for the deployment of your Product Web Site.
+**Product Web Site Name**- This is the name of the Azure Web App that will be used for the deployment of your Product Web Site.
 
 **Shopping Web Site Name** - This is the name of the Azure Web App that will be used for the deployment of your Shopping Cart Web Site.
 
