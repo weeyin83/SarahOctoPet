@@ -11,6 +11,7 @@ You can view this all being used and in action in this [demo Octopus Deploy inst
 **Table of Contents:** 
 - [OctoPetShop](#octopetshop)
 - [GitHub Actions Workflow](#github-actions-workflow)
+    - [GitHub Actions Secrets](#github-secrets)
 - [Bicep Deployment Process](#bicep-deployment-process)
     - [Create the Azure Resource Group](#create-azure-resource-group)
     - [Deploy Bicep Template](#deploy-bicep-instructions)
@@ -32,6 +33,14 @@ This is a customized fork from the [Octopus Deploy Sample](https://github.com/Oc
  Within the .github/workflows folder you will find a GitHub Actions Workflow file entitled 'octopetshopbuild.yml'.  This workflow builds the .NET packages, and then pushes them to an Octopus instance ready for deployment to the relevant infrastructure. 
 
 The 'biceppush.yml' GitHub Actions Workflow file takes the Azure Bicep module and template files within the Bicep folder.  Packs them into a ZIP file and then pushes them to the Octopus Deploy server ready for deployment. 
+
+## GitHub Secrets
+Both GitHub Actions require information about your Octopus Deploy instance to work.  I have set it up that this information is stored within GitHub Secrets to protect it from anyone public.  These are stored within Settings > Secrets > Actions. 
+
+You need the following secrets: 
+- OCTOPUSSERVERAPIKEY: This allows you to authenticate with your Octopus Deploy server. You can find out more information on how to generate an API key [here](https://octopus.com/docs/octopus-rest-api/how-to-create-an-api-key)
+- OCTOPUSERVERURL: This is the URL of your Octopus instance, in my case it is https://webinar.octopus.app/
+- OCTOPUSSERVER_SPACE - This is the identifier for your Octopus Deploy [Space](https://octopus.com/docs/administration/spaces). My example is "Spaces-242". 
 
 # Bicep Deployment Process
 
