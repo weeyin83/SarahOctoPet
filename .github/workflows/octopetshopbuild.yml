@@ -52,5 +52,14 @@ jobs:
     - name: Push OctoPetShop ShoppingCartService
       run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.ShoppingCartService.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
 
-
+  # Create a release
+    - name: Create a Release in Octopus
+      uses: OctopusDeploy/create-release-action@v1.1.1
+      with:
+        api_key: ${{ secrets.OCTOPUS_API_KEY }}
+        project: "OctoPetShop"
+        server: ${{ secrets.OCTOPUS_SERVER_URL }}
+        space: ${{ secrets. OCTOPUS_SPACE }}
+        defaultPackageVersion: ${{ github.run_number }}
+        version: ${{ github.run_number }}
                     
