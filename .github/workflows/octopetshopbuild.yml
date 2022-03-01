@@ -64,6 +64,6 @@ jobs:
         
   # Deploy to Test
     - name: Deploy to Test 
-      run: octo deploy-release --project OctoPetShop --space ${{ secrets.OCTOPUSSERVER_SPACE }} --releaseNumber ${{ github.run_number }} --deployto Test --server ${{ secrets.OCTOPUSSERVERURL }} --apiKey ${{ secrets.OCTOPUSSERVERAPIKEY }}
+      run: octo deploy-release --project OctoPetShop --space ${{ secrets.OCTOPUSSERVER_SPACE }} --version latest --deployto Test --server ${{ secrets.OCTOPUSSERVERURL }} --apiKey ${{ secrets.OCTOPUSSERVERAPIKEY }}
 
                     
