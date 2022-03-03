@@ -1,0 +1,119 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentName": {
+            "type": "string",
+            "defaultValue": "dev",
+            "metadata": {
+                "description": "Environment name"
+            },
+            "minLength": 2
+        },
+        "servicePlanName": {
+            "type": "string",
+            "defaultValue": "ops-serviceplan",
+            "metadata": {
+                "description": "Service plan name"
+            },
+            "minLength": 2
+        },
+        "shoppingCartAppName": {
+            "type": "string",
+            "defaultValue": "ops-shoppingcart",
+            "metadata": {
+                "description": "The name of the shopping cart app"
+            },
+            "minLength": 2
+        },
+        "productAppName": {
+            "type": "string",
+            "defaultValue": "ops-product",
+            "metadata": {
+                "description": "The name of the product app"
+            },
+            "minLength": 2
+        },
+        "webAppName": {
+            "type": "string",
+            "defaultValue": "ops-web",
+            "metadata": {
+                "description": "The name of the web app"
+            },
+            "minLength": 2
+        },
+        "sku": {
+            "type": "string",
+            "defaultValue": "S1",
+            "metadata": {
+                "description": "The SKU of App Service Plan, by default is Standard S1"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "centralus",
+            "metadata": {
+                "description": "Location for all resources"
+            }
+        }
+    },
+    "variables": {
+        "servicePlanName": "[concat(parameters('servicePlanName'), '-', parameters('environmentName'))]",
+        "shoppingCartAppName": "[concat(parameters('shoppingCartAppName'), '-', parameters('environmentName'))]",
+        "productAppName": "[concat(parameters('productAppName'), '-', parameters('environmentName'))]",
+        "webAppName": "[concat(parameters('webAppName'), '-', parameters('environmentName'))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-08-01",
+            "type": "Microsoft.Web/serverfarms",
+            "kind": "app",
+            "name": "[variables('servicePlanName')]",
+            "location": "[parameters('location')]",
+            "properties": {},
+            "dependsOn": [],
+            "sku": {
+                "name": "[parameters('sku')]"
+            }
+        },
+        {
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[variables('webAppName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+            ]
+        },
+        {
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[variables('productAppName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+            ]
+        },
+        {
+            "apiVersion": "2016-08-01",
+            "type": "Microsoft.Web/sites",
+            "kind": "app",
+            "name": "[variables('shoppingCartAppName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('servicePlanName'))]"
+            ]
+        }
+    ]
+}
