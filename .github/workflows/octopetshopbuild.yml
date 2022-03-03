@@ -3,6 +3,7 @@
 name: OctoPetShopAppBuild
 
 on:
+  workflow_dispatch:
   push:
     branches:
     - main
@@ -23,8 +24,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
     - name: Publish Web
       run: dotnet publish ${{ github.workspace }}\OctopusSamples.OctoPetShop.Web/OctopusSamples.OctoPetShop.Web.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}\output\OctoPetShop.Web\
     - name: Publish Product Service API
@@ -52,5 +51,19 @@ jobs:
     - name: Push OctoPetShop ShoppingCartService
       run: octo push --package="${{ github.workspace }}\output\OctopusSamples.OctoPetShop.ShoppingCartService.${{ github.run_number }}.zip" --server="${{ secrets.OCTOPUSSERVERURL }}" --apiKey="${{ secrets.OCTOPUSSERVERAPIKEY }}" --space="${{ secrets.OCTOPUSSERVER_SPACE }}"
 
+  # Create a release
+    - name: Create a Release in Octopus
+      uses: OctopusDeploy/create-release-action@v1.1.1
+      with:
+        api_key: ${{ secrets.OCTOPUSSERVERAPIKEY }}
+        project: "OctoPetShop"
+        server: ${{ secrets.OCTOPUSSERVERURL }}
+        space: ${{ secrets.OCTOPUSSERVER_SPACE }}
+        defaultPackageVersion: ${{ github.run_number }}
+        version: ${{ github.run_number }}
+        
+  # Deploy to Test
+    - name: Deploy to Test 
+      run: octo deploy-release --project OctoPetShop --space ${{ secrets.OCTOPUSSERVER_SPACE }} --version latest --deployto Test --server ${{ secrets.OCTOPUSSERVERURL }} --apiKey ${{ secrets.OCTOPUSSERVERAPIKEY }}
 
                     
